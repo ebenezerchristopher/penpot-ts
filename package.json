@@ -1,0 +1,22 @@
+{
+	"name": "penpot-phoenix",
+	"version": "1.0.0",
+	"private": true,
+	"description": "The TypeScript monorepo for the Penpot rebuild project.",
+	"packageManager": "pnpm@9.1.0",
+	"scripts": {
+		"dev": "turbo run dev --parallel",
+		"build": "turbo run build",
+		"test": "turbo run test",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+		"clean": "turbo run clean && rm -rf node_modules"
+	},
+	"devDependencies": {
+		"@types/node": "^20.12.12",
+		"eslint": "^8.57.0",
+		"prettier": "^3.2.5",
+		"turbo": "^2.0.9",
+		"typescript": "^5.4.5"
+	}
+}
