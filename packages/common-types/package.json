@@ -1,0 +1,18 @@
+{
+  "name": "@penpot/common-types",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint \"**/*.ts\"",
+    "clean": "rm -rf dist .turbo"
+  },
+  "devDependencies": {
+    "@penpot/eslint-config": "workspace:*",
+    "@penpot/tsconfig": "workspace:*",
+    "eslint": "^9.29.0",
+    "typescript": "^5.8.3"
+  }
+}
