@@ -1,0 +1,10 @@
+{
+  "extends": "@penpot/tsconfig/react-library.json",
+  "compilerOptions": {
+    "noEmit": true, // Vite handles emission, tsc is only for type checking
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
