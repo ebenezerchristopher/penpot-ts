@@ -1,5 +1,5 @@
 {
-  "name": "@penpot/common-types",
+  "name": "@penpot/ui-core",
   "version": "1.0.0",
   "private": true,
   "exports": {
@@ -10,16 +10,20 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "lint": "eslint src --ext .ts --no-error-on-unmatched-pattern",
+    "lint": "eslint src --ext .ts,.tsx --no-error-on-unmatched-pattern",
     "clean": "rm -rf dist .turbo"
   },
   "devDependencies": {
     "@penpot/eslint-config": "workspace:*",
     "@penpot/tsconfig": "workspace:*",
+    "@storybook/react": "^8.6.14",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "eslint": "^9.29.0",
+    "react": "^19.1.0",
     "typescript": "^5.8.3"
   },
-  "dependencies": {
-    "zod": "^3.25.67"
+  "peerDependencies": {
+    "react": "^19.1.0"
   }
 }

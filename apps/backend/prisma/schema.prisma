@@ -1,0 +1,115 @@
+// /apps/backend/prisma/schema.prisma
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id                 String    @id @default(uuid()) @db.Uuid
+  email              String    @unique
+  fullname           String
+  password           String
+  auth_backend       String    @default("penpot")
+  is_active          Boolean   @default(false)
+  is_blocked         Boolean   @default(false)
+  is_demo            Boolean   @default(false)
+  created_at         DateTime  @default(now()) @db.Timestamp(6)
+  modified_at        DateTime  @updatedAt @db.Timestamp(6)
+  deleted_at         DateTime? @db.Timestamp(6)
+  
+  default_team_id    String?   @db.Uuid
+  default_project_id String?   @db.Uuid
+
+  // Relations
+  sessions           HttpSession[]
+  teams              TeamProfileRelation[]
+  projects           ProjectProfileRelation[]
+  owned_teams        Team[]        @relation("TeamOwner")
+}
+
+model Team {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  is_default    Boolean   @default(false)
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  modified_at   DateTime  @updatedAt @db.Timestamp(6)
+  deleted_at    DateTime? @db.Timestamp(6)
+
+  owner_id      String    @db.Uuid
+  owner         Profile   @relation("TeamOwner", fields: [owner_id], references: [id])
+
+  // Relations
+  projects      Project[]
+  members       TeamProfileRelation[]
+}
+
+model Project {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  modified_at   DateTime  @updatedAt @db.Timestamp(6)
+  deleted_at    DateTime? @db.Timestamp(6)
+
+  team_id       String    @db.Uuid
+  team          Team      @relation(fields: [team_id], references: [id])
+
+  // Relations
+  files         File[]
+  members       ProjectProfileRelation[]
+}
+
+model File {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  revn          Int       @default(0)
+  vern          Int       @default(0)
+  is_shared     Boolean   @default(false)
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  modified_at   DateTime  @updatedAt @db.Timestamp(6)
+  deleted_at    DateTime? @db.Timestamp(6)
+  
+  project_id    String    @db.Uuid
+  project       Project   @relation(fields: [project_id], references: [id])
+}
+
+// For Auth
+model HttpSession {
+  id          String   @id @db.VarChar(255)
+  created_at  DateTime @default(now()) @db.Timestamp(6)
+  updated_at  DateTime @updatedAt @db.Timestamp(6)
+  user_agent  String?
+  
+  profile_id  String   @db.Uuid
+  profile     Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+}
+
+// --- Join Tables for Many-to-Many Relations ---
+
+model TeamProfileRelation {
+  team_id     String @db.Uuid
+  profile_id  String @db.Uuid
+  role        String // e.g., 'owner', 'admin', 'editor', 'viewer'
+  
+  team        Team   @relation(fields: [team_id], references: [id], onDelete: Cascade)
+  profile     Profile @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@id([team_id, profile_id])
+}
+
+model ProjectProfileRelation {
+  project_id  String @db.Uuid
+  profile_id  String @db.Uuid
+  
+  project     Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  profile     Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@id([project_id, profile_id])
+}
