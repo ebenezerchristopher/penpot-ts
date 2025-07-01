@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
-import { PassportModule } from '@nestjs/passport'; // <-- NEW
-import { JwtModule } from '@nestjs/jwt'; // <-- NEW
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: process.env.JWT_SECRET, // Use the secret from .env
+      secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '7d', // Token expires in 7 days, matching original logic
+        expiresIn: '7d',
       },
     }),
   ],
-  providers: [AuthResolver, AuthService],
+  providers: [AuthResolver, AuthService, JwtStrategy],
+  exports: [JwtModule], // Export so it can be used elsewhere if needed
 })
 export class AuthModule {}

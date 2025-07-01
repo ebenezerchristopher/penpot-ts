@@ -44,7 +44,7 @@ model Team {
   deleted_at    DateTime? @db.Timestamp(6)
 
   owner_id      String    @db.Uuid
-  owner         Profile   @relation("TeamOwner", fields: [owner_id], references: [id])
+  owner         Profile   @relation("TeamOwner", fields: [owner_id], references: [id], onDelete: Cascade)
 
   // Relations
   projects      Project[]

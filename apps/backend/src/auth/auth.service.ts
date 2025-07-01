@@ -14,6 +14,13 @@ import { JwtService } from '@nestjs/jwt'; // <-- NEW
 // Define a utility type that is 'Profile' but omits the 'password' field.
 type SanitizedProfile = Omit<Profile, 'password'>;
 
+// This represents the user object attached to the request by the JWT strategy
+export type AuthenticatedUser = {
+  id: string;
+  email: string;
+  fullname: string;
+  is_active: boolean;
+};
 @Injectable()
 export class AuthService {
   constructor(
@@ -73,7 +80,7 @@ export class AuthService {
         data: {
           email: lowercasedEmail,
           fullname,
-          password: hashedPassword, // The real implementation
+          password: hashedPassword,
         },
       });
 
@@ -104,7 +111,7 @@ export class AuthService {
   }
 
   // NEW METHOD FOR SIGNING TOKENS
-  async login(user: SanitizedProfile): Promise<LoginResponse> {
+  async login(user: AuthenticatedUser): Promise<LoginResponse> {
     const payload = { email: user.email, sub: user.id };
     return {
       accessToken: this.jwtService.sign(payload),
