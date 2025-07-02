@@ -16,3 +16,18 @@ export type ProfileResponse = {
   is_active: boolean;
   is_demo: boolean;
 };
+
+export type DashboardProject = {
+  id: string;
+  name: string;
+};
+
+export type DashboardTeam = {
+  id: string;
+  name: string;
+  projects: DashboardProject[];
+};
+
+export type DashboardResponse = {
+  teams: DashboardTeam[];
+};

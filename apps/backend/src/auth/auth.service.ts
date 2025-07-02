@@ -117,4 +117,29 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
     };
   }
+
+  async getDashboardData(profileId: string) {
+    const teams = await this.prisma.team.findMany({
+      where: {
+        members: {
+          some: {
+            profile_id: profileId,
+          },
+        },
+      },
+      include: {
+        // Include related projects for each team
+        projects: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    return { teams };
+  }
 }

@@ -7,16 +7,19 @@ import { MainContent } from './MainContent';
 import { useAuthStore } from '../auth/use-auth.store';
 
 export const DashboardPage: React.FC = () => {
-  // On initial load, if we have a token but no user object, fetch it.
-  const { accessToken, user, fetchProfile } = useAuthStore();
-  React.useEffect(() => {
-    if (accessToken && !user) {
-      fetchProfile();
-    }
-  }, [accessToken, user, fetchProfile]);
+  const { user, fetchProfile, dashboardData, fetchDashboardData } =
+    useAuthStore();
 
-  if (!user) {
-    // Show a loading indicator while the user profile is being fetched.
+  React.useEffect(() => {
+    // Fetch profile if needed, then fetch dashboard data
+    if (!user) {
+      fetchProfile().then(() => fetchDashboardData());
+    } else if (!dashboardData) {
+      fetchDashboardData();
+    }
+  }, [user, fetchProfile, dashboardData, fetchDashboardData]);
+
+  if (!user || !dashboardData) {
     return <div>Loading dashboard...</div>;
   }
 

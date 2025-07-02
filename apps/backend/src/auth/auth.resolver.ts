@@ -8,6 +8,7 @@ import { GqlAuthGuard } from './guards/gql-auth.guard'; // <-- NEW
 import { CurrentUser } from './decorators/current-user.decorator'; // <-- NEW (will create next)
 import { ProfileResponse } from './dto/profile.response'; // <-- NEW
 import { Profile } from '@prisma/client';
+import { DashboardResponse } from './dto/dashboard.response'; // <-- NEW
 
 @Resolver()
 export class AuthResolver {
@@ -38,5 +39,14 @@ export class AuthResolver {
     // The `user` object is attached to the request by our JwtStrategy's validate method.
     // The @CurrentUser decorator simply extracts it for us.
     return user;
+  }
+
+  @Query(() => DashboardResponse)
+  @UseGuards(GqlAuthGuard)
+  async getDashboardData(
+    @CurrentUser() user: Profile
+  ): Promise<DashboardResponse> {
+    // We use the auth.service to handle the database logic
+    return this.authService.getDashboardData(user.id);
   }
 }

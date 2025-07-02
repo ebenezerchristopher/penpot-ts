@@ -4,6 +4,7 @@ import { gql } from 'graphql-request';
 // Import our new clients
 import { rawApiClient, authedApiClient } from '../../lib/api-client';
 import type { ProfileResponse, LoginInput, RegisterInput } from './auth.types';
+import { DashboardResponse } from './auth.types'; // <-- NEW
 
 // A helper function to safely extract an error message.
 function getErrorMessage(error: unknown): string {
@@ -34,6 +35,8 @@ interface AuthState {
   register: (input: RegisterInput) => Promise<void>;
   logout: () => void;
   fetchProfile: () => Promise<void>;
+  dashboardData: DashboardResponse | null;
+  fetchDashboardData: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -44,6 +47,35 @@ export const useAuthStore = create<AuthState>()(
         user: null,
         status: 'idle',
         error: null,
+        dashboardData: null,
+
+        fetchDashboardData: async () => {
+          const query = gql`
+            query GetDashboardData {
+              getDashboardData {
+                teams {
+                  id
+                  name
+                  projects {
+                    id
+                    name
+                  }
+                }
+              }
+            }
+          `;
+          try {
+            const data = await authedApiClient<{
+              getDashboardData: DashboardResponse;
+            }>(query);
+            set({ dashboardData: data.getDashboardData });
+          } catch (error) {
+            console.error(
+              'Failed to fetch dashboard data:',
+              getErrorMessage(error)
+            );
+          }
+        },
 
         login: async (input) => {
           set({ status: 'loading', error: null });
