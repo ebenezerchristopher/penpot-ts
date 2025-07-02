@@ -12,14 +12,18 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "graphql": "^16.11.0",
+    "graphql-request": "^7.2.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "wouter": "^3.7.1",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
+    "@penpot/common-types": "workspace:*",
     "@penpot/eslint-config": "workspace:*",
     "@penpot/tsconfig": "workspace:*",
     "@penpot/ui-core": "workspace:*",
-    "@penpot/common-types": "workspace:*",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",

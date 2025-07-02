@@ -32,7 +32,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('User not found or is disabled.');
     }
 
-    // We attach a simplified user object to the request context.
-    return { id: user.id, email: user.email, fullname: user.fullname };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...result } = user;
+    return result;
   }
 }
