@@ -1,0 +1,30 @@
+/* packages/ui-core/src/_Button.scss */
+
+.button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &.primary {
+    background-color: var(--color-brand-primary);
+    color: var(--color-background-primary);
+  }
+
+  &.secondary {
+    background-color: var(--color-gray-700);
+    color: var(--color-background-primary);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styles from './Button.module.scss';
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -9,23 +9,15 @@ export interface ButtonProps
 export const Button = ({
   children,
   variant = 'primary',
+  className,
   ...props
 }: ButtonProps) => {
-  const baseStyle = {
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-  };
-
-  const variantStyle =
-    variant === 'primary'
-      ? { backgroundColor: '#007bff', color: 'white' }
-      : { backgroundColor: '#6c757d', color: 'white' };
+  const classNames = [styles.button, styles[variant], className]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <button style={{ ...baseStyle, ...variantStyle }} {...props}>
+    <button className={classNames} {...props}>
       {children}
     </button>
   );

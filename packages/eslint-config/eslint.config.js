@@ -7,23 +7,24 @@ const globals = require('globals');
 
 module.exports = [
   {
-    // Add a global ignores configuration at the top level.
-    // This is the most effective way to ignore files in flat config.
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
       '**/.turbo/**',
       '**/coverage/**',
+      'packages/tsconfig/**',
     ],
   },
   {
-    // Global configuration for all JS/TS files
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    // This configuration now ONLY targets TypeScript files.
+    files: ['**/*.{ts,cts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
         ecmaFeatures: { jsx: true },
-        project: true, // Use tsconfig.json in consumer packages
+        // This is now safe, because it will only apply to TS files
+        // for which a tsconfig.json can be found.
+        project: true,
       },
       globals: {
         ...globals.browser,
@@ -38,13 +39,11 @@ module.exports = [
       'react-refresh': reactRefreshPlugin,
     },
     rules: {
-      // Base Recommended Rules
+      // Rules remain the same
       ...typescriptPlugin.configs['eslint-recommended'].rules,
       ...typescriptPlugin.configs['recommended'].rules,
       ...reactPlugin.configs['recommended'].rules,
       ...reactHooksPlugin.configs['recommended'].rules,
-
-      // Custom Overrides
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': [
@@ -62,6 +61,5 @@ module.exports = [
         version: 'detect',
       },
     },
-    ignores: ['node_modules/', 'dist/', '.turbo/', 'coverage/'],
   },
 ];

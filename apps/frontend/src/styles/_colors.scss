@@ -1,0 +1,25 @@
+/* apps/frontend/src/styles/_colors.scss */
+
+:root {
+  /* Brand Colors */
+  --color-brand-primary: #3377ff;
+  --color-brand-primary-hover: #2663d9;
+
+  /* Neutral Grays */
+  --color-gray-900: #212529;
+  --color-gray-700: #495057;
+  --color-gray-500: #adb5bd;
+  --color-gray-300: #dee2e6;
+  --color-gray-100: #f8f9fa;
+
+  /* UI Colors */
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-700);
+  --color-background-primary: #ffffff;
+  --color-background-secondary: var(--color-gray-100);
+  --color-border-primary: var(--color-gray-300);
+
+  /* Feedback Colors */
+  --color-feedback-error: #dc3545;
+  --color-feedback-success: #28a745;
+}

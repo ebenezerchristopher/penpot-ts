@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["es2022"],
     "module": "commonjs",
+    "moduleResolution": "commonjs",
     "target": "es2022"
   }
 }

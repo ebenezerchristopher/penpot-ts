@@ -1,0 +1,8 @@
+/* apps/frontend/src/styles/main.scss */
+
+// These files define global CSS variables and base styles.
+// They are loaded once for the entire application.
+@use 'reset';
+@use 'colors';
+@use 'variables';
+@use 'typography';
