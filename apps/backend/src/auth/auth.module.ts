@@ -7,7 +7,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
@@ -16,6 +16,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
   ],
   providers: [AuthResolver, AuthService, JwtStrategy],
-  exports: [JwtModule], // Export so it can be used elsewhere if needed
+  exports: [AuthService, JwtModule], // Export so it can be used elsewhere if needed
 })
 export class AuthModule {}

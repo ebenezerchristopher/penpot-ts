@@ -1,0 +1,70 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type DashboardProject {
+  id: ID!
+  name: String!
+}
+
+type DashboardResponse {
+  teams: [DashboardTeam!]!
+}
+
+type DashboardTeam {
+  id: ID!
+  name: String!
+  projects: [DashboardProject!]!
+}
+
+type FileBundle {
+  """The raw JSONB data of the file, containing pages, shapes, etc."""
+  data: JSON!
+  id: ID!
+  name: String!
+}
+
+type GetFileBundleResponse {
+  file: FileBundle!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): LoginResponse!
+  register(registerInput: RegisterInput!): LoginResponse!
+}
+
+type ProfileResponse {
+  email: String!
+  fullname: String!
+  id: ID!
+  is_active: Boolean!
+  is_demo: Boolean!
+}
+
+type Query {
+  getDashboardData: DashboardResponse!
+  getFileBundle(fileId: String!): GetFileBundleResponse!
+  getProfile: ProfileResponse!
+  health(echo: String): String!
+  hello: String!
+}
+
+input RegisterInput {
+  email: String!
+  fullname: String!
+  password: String!
+}

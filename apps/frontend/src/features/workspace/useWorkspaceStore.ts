@@ -2,10 +2,10 @@
 
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-//import { gql } from 'graphql-request';
-//import { authedApiClient } from '../../lib/api-client';
+import { gql } from 'graphql-request';
 import type { WorkspaceState, FileBundle } from './workspace.types';
 import type { Page } from '@penpot/common-types';
+import { authedApiClient } from '../../lib/api-client';
 
 // A helper to process the file data into a more usable map structure
 function processFileBundle(bundle: FileBundle): Partial<WorkspaceState> {
@@ -45,51 +45,23 @@ export const useWorkspaceStore = create<WorkspaceState>()(
       fetchFileBundle: async (fileId: string) => {
         set({ status: 'loading', error: null });
         try {
-          // This query will be created in the next ticket (PHX-30)
-          /**
-          * 
-          *  const query = gql`
+          const query = gql`
             query GetFileBundle($fileId: String!) {
               getFileBundle(fileId: $fileId) {
                 file {
                   id
                   name
-                  data {
-                    pages
-                    pagesIndex
-                  }
+                  data
                 }
               }
             }
           `;
-          */
 
-          // For now, we will mock the response.
-          // const { getFileBundle } = await apiClient.request<{ getFileBundle: FileBundle }>(query, { fileId });
+          const { getFileBundle } = await authedApiClient<{
+            getFileBundle: FileBundle;
+          }>(query, { fileId });
 
-          // --- MOCKED DATA ---
-          const mockPageId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
-          const mockFileBundle: FileBundle = {
-            file: {
-              id: fileId,
-              name: 'My Awesome File',
-              version: 1,
-              features: [],
-              data: {
-                pages: [mockPageId],
-                pagesIndex: {
-                  [mockPageId]: {
-                    id: mockPageId,
-                    name: 'Page 1',
-                    objects: {}, // Initially empty
-                  },
-                },
-              },
-            },
-          };
-          // --- END MOCKED DATA ---
-
-          set(processFileBundle(mockFileBundle));
+          set(processFileBundle(getFileBundle));
         } catch (error: unknown) {
           // ... error handling ...
           set({ status: 'error', error: `${error}` });

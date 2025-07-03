@@ -1,18 +1,16 @@
 // apps/frontend/src/features/workspace/workspace.types.ts
 
-import type { File, Page, Shape } from '@penpot/common-types';
+import type { File as CommonFile, Page, Shape } from '@penpot/common-types';
 
-// The full data bundle required to initialize the workspace
 export type FileBundle = {
-  file: File;
-  // In the future, this will also include libraries, comments, etc.
+  file: CommonFile;
 };
 
 export interface WorkspaceState {
   status: 'idle' | 'loading' | 'ready' | 'error';
   error: string | null;
 
-  fileData: File | null;
+  fileData: CommonFile | null;
   pages: Map<string, Page>;
   currentPageId: string | null;
 

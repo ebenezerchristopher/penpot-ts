@@ -6,9 +6,9 @@ declare module '*.module.css' {
   export default classes;
 }
 
-// THIS IS THE CORRECTED DECLARATION
-// It now declares that ANY file ending in .scss is a CSS Module.
-// This covers both `_Button.scss` and any potential `SomeComponent.module.scss`.
+// For SCSS Modules
+// The constant is renamed to 'styles' to avoid a name collision with the '*.module.css' declaration.
+// The exported type remains the same.
 declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;

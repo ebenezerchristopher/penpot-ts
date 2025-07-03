@@ -3,11 +3,14 @@
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react-jsx",
+    "target": "es2022",
     "declaration": true,
     "composite": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src", "../tsconfig/global.d.ts"],
+  "include": ["src", "./global.d.ts"],
   "references": [{ "path": "../common-types" }]
 }

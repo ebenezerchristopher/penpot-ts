@@ -1,17 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
     "outDir": "./dist",
+    "module": "commonjs",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["es2022"],
     "target": "es2022",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "strict": true,
-    "composite": true
+    "strict": true
   },
   "include": ["src"],
-  "references": [{ "path": "../../packages/common-types" }]
+  "exclude": ["node_modules", "test", "dist"]
 }
