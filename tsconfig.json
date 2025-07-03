@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@penpot/common-types": ["packages/common-types/src/index.ts"],
+      "@penpot/ui-core": ["packages/ui-core/src/index.ts"]
+    }
+  }
+}

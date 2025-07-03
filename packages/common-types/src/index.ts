@@ -8,6 +8,7 @@ export * from './page';
 export * from './file';
 export * from './token'; // <-- NEW
 export * from './variant'; // <-- NEW
+export * from './api-dtos';
 
 // Existing placeholder type
 export type Placeholder = {

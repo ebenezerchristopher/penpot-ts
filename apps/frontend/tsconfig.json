@@ -1,14 +1,13 @@
 {
-  "extends": "@penpot/tsconfig/react-library.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "module": "esnext",
+    "noEmit": true,
+    "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "noEmit": true, // Vite handles emission, tsc is only for type checking
-    "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "esModuleInterop": true,
+    "strict": true
   },
-  "include": ["src", "../../packages/tsconfig/global.d.ts"],
-  "references": [
-    { "path": "../../packages/common-types" },
-    { "path": "../../packages/ui-core" }
-  ]
+  "include": ["src", "../../packages/tsconfig/global.d.ts"]
 }
